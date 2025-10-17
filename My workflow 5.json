@@ -1,0 +1,267 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -32
+      ],
+      "id": "b9929d00-f780-4747-8aa5-81372938c677",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/LQQIXN9Othf8f7R5n/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "XXXX_REDACTED_XXXX"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "=keypair{{ $json.url }}",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        -32
+      ],
+      "id": "093d9da5-86f4-421a-84a5-eb72598ea410",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1AHyCU1w1H4ixjNXzSFtjcP_MjU6sPI3GqgEagtBZp2Y",
+          "mode": "list",
+          "cachedResultName": "linkedin...",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AHyCU1w1H4ixjNXzSFtjcP_MjU6sPI3GqgEagtBZp2Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AHyCU1w1H4ixjNXzSFtjcP_MjU6sPI3GqgEagtBZp2Y/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -288,
+        -32
+      ],
+      "id": "dfd3ac1e-3bdd-46b6-ae29-dcf081daf5ce",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4d0UyjKGPXHEmA2d",
+          "name": "Rahul-yadav Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "96abf3d3-16bc-4ca3-958e-48534e882b1a",
+              "leftValue": "={{ $json.stats.total_reactions }}",
+              "rightValue": 1000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        -32
+      ],
+      "id": "7c2c5197-3587-4c9c-b6ef-1f4b6c7e6d62",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1AHyCU1w1H4ixjNXzSFtjcP_MjU6sPI3GqgEagtBZp2Y",
+          "mode": "list",
+          "cachedResultName": "linkedin...",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AHyCU1w1H4ixjNXzSFtjcP_MjU6sPI3GqgEagtBZp2Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2049627981,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AHyCU1w1H4ixjNXzSFtjcP_MjU6sPI3GqgEagtBZp2Y/edit#gid=2049627981"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "reactions": "={{ $json.stats.total_reactions }}",
+            "linkedi url": "={{ $json.url }}",
+            "competitor name": "={{ $json.author.first_name }} {{ $json.author.last_name }}",
+            "comments": "={{ $json.stats.comments }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "linkedi url",
+              "displayName": "linkedi url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "competitor name",
+              "displayName": "competitor name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reactions",
+              "displayName": "reactions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "comments",
+              "displayName": "comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        352,
+        -32
+      ],
+      "id": "3be47979-ac3a-403b-bad2-a16d742a3477",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4d0UyjKGPXHEmA2d",
+          "name": "Rahul-yadav Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0df88f53-7351-4a0a-a74e-6e26b333f408",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4ba18299daa275083f83dda7a9ad75aae48c2b9b0ef8ccc3de9e36452d5310fd"
+  },
+  "id": "IQPLbghvKWq3n5OT",
+  "tags": []
+}
